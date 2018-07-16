@@ -1,0 +1,18 @@
+{
+    "extends": "airbnb-base",
+    "env": {
+        "commonjs": true,
+        "mocha": true,
+        "es6": true,
+        "mongo": true,
+        "node": true
+    },
+    "parserOptions": {
+        "ecmaVersion": 2015
+    },
+    "rules": {
+        "linebreak-style":"off",
+        "no-underscore-dangle":"off",
+        "no-console":"off"
+    }
+}
