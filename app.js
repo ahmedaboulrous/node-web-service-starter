@@ -14,6 +14,7 @@ const bodyParser = require('body-parser');
 // and will be removed in a future version. To use the new parser,
 // pass option { useNewUrlParser: true } to MongoClient.connect.
 mongoose.connect('mongodb://localhost:27017/crud', { useNewUrlParser: true });
+mongoose.Promise = global.Promise;
 const db = mongoose.connection;
 
 db.on('error', error => console.log('connection error:', error.message));
