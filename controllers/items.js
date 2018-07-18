@@ -1,14 +1,13 @@
 const router = require('express').Router();
 const Item = require('../models/item');
-
+const ResponseError = require('../helpers/ResponseError');
 
 // retrieve all items
 router.get('/', (req, res, next) => {
   Item.find({}).then((items) => {
     res.status(200).send(items);
   }).catch((dbError) => {
-    const error = new Error(dbError.message);
-    error.status = 422;
+    const error = new ResponseError(dbError.message, 422);
     next(error);
   });
 });
@@ -18,8 +17,7 @@ router.get('/:itemId', (req, res, next) => {
   Item.findById(req.params.itemId).then((items) => {
     res.status(200).send(items);
   }).catch((dbError) => {
-    const error = new Error(dbError.message);
-    error.status = 422;
+    const error = new ResponseError(dbError.message, 422);
     next(error);
   });
 });
@@ -30,8 +28,7 @@ router.post('/', (req, res, next) => {
   Item.create(req.body).then((dbSavedItem) => {
     res.status(201).send(dbSavedItem);
   }).catch((dbError) => {
-    const error = new Error(dbError.message);
-    error.status = 422;
+    const error = new ResponseError(dbError.message, 422);
     next(error);
   });
 });
@@ -43,13 +40,11 @@ router.put('/:itemId', (req, res, next) => {
     Item.findById(dbFoundItem._id).then((dbUpdatedItem) => {
       res.status(200).send(dbUpdatedItem);
     }).catch((dbError) => {
-      const error = new Error(dbError.message);
-      error.status = 422;
+      const error = new ResponseError(dbError.message, 422);
       next(error);
     });
   }).catch((dbError) => {
-    const error = new Error(dbError.message);
-    error.status = 422;
+    const error = new ResponseError(dbError.message, 422);
     next(error);
   });
 });
@@ -61,8 +56,7 @@ router.delete('/', (req, res, next) => {
     Item.remove({}).then(() => {
       res.status(200).send(collectionItems);
     }).catch((dbError) => {
-      const error = new Error(dbError.message);
-      error.status = 422;
+      const error = new ResponseError(dbError.message, 422);
       next(error);
     });
   });
@@ -73,8 +67,7 @@ router.delete('/:itemId', (req, res, next) => {
   Item.findByIdAndRemove(req.params.itemId).then((dbDeletedItem) => {
     res.status(200).send(dbDeletedItem);
   }).catch((dbError) => {
-    const error = new Error(dbError.message);
-    error.status = 422;
+    const error = new ResponseError(dbError.message, 422);
     next(error);
   });
 });
